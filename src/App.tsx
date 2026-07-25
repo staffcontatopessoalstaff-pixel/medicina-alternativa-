@@ -20,7 +20,7 @@ import {
 
 // TikTok Pixel & Events API Configuration
 const TIKTOK_PIXEL_IDS = ['D9HS3P3C77UDT3P967TG', 'D9IEBAJC77U84G6G7PN0'];
-const TIKTOK_ACCESS_TOKEN = '6fb1754dc33918094136a4e913b65b7aeba7171f';
+const TIKTOK_ACCESS_TOKEN = 'aa242de55f860e5bf37f8a6ba3f92fbe4ec55058';
 
 declare global {
   interface Window {
