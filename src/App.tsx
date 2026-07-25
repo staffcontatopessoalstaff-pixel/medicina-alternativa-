@@ -18,6 +18,33 @@ import {
   HelpCircle
 } from 'lucide-react';
 
+// TikTok Pixel Type Declaration
+declare global {
+  interface Window {
+    ttq?: any;
+  }
+}
+
+// TikTok Event Trigger Helper
+const trackTikTokEvent = (eventName: string, params?: Record<string, any>) => {
+  if (window.ttq && typeof window.ttq.track === 'function') {
+    window.ttq.track(eventName, params);
+  }
+};
+
+// Route Change Tracker for TikTok Pixel PageView
+function TikTokRouteTracker() {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (window.ttq && typeof window.ttq.page === 'function') {
+      window.ttq.page();
+    }
+  }, [location]);
+
+  return null;
+}
+
 interface Remedy {
   letter: string;
   symptom: string;
@@ -30,7 +57,7 @@ const remediesData: Remedy[] = [
   { letter: 'A', symptom: 'Azia, Refluxo & Queimação no Estômago', page: 116, ingredient: 'Chá de Espinheira-Santa & Suco de Batata Doce', preview: 'Alívio imediato da queimação estomacal sem precisar de antiácidos químicos.' },
   { letter: 'A', symptom: 'Ansiedade, Estresse & Esgotamento Nervoso', page: 212, ingredient: 'Infusão Concentrada de Mulungu & Maracujá', preview: 'Acalma o sistema nervoso central de forma suave, reduzindo a tensão e palpitação.' },
   { letter: 'A', symptom: 'Articulações, Juntas & Dores Musculares', page: 340, ingredient: 'Compressa Tópica de Canela-de-Velho & Arnica', preview: 'Desinflama as articulações, joelhos e coluna em poucos dias de uso contínuo.' },
-  { letter: 'C', symptom: 'Colesterol Alto, Triglicérides & Artérias', page: 351, ingredient: 'Alho Roxo Macerado com Limão e Azeite', preview: 'Ajuda a desobstruir artérias e regular as taxas sanguíneas naturalmente.' },
+  { letter: 'C', symptom: 'Colesterol Alto, Triglicérides & Artérias', page: 351, ingredient: 'Alho Roxo Macerado com Limão e Azeite', preview: 'Ajuda a desobstruir artérias e regular as taxas sanguíneas naturally.' },
   { letter: 'C', symptom: 'Cólicas Intestinais & Prisão de Ventre', page: 327, ingredient: 'Chá de Ameixa Preta com Semente de Linhaça', preview: 'Estimula o trânsito intestinal sem causar dores abdominais ou diarreia.' },
   { letter: 'D', symptom: 'Dores nas Costas, Coluna e Peito', page: 325, ingredient: 'Cataplasma de Argila Verde com Sucupira', preview: 'Alivia dores lombares e rigidez muscular rapidamente.' },
   { letter: 'D', symptom: 'Dor de Cabeça e Enxaqueca Crônica', page: 196, ingredient: 'Óleo Essencial de Hortelã-Pimenta na Têmpora', preview: 'Descongestiona os vasos sanguíneos aliviando a pressão cefálica.' },
@@ -65,8 +92,7 @@ function NavigationHeader({ largeFont, setLargeFont }: { largeFont: boolean; set
 
 // 1. PRESELL PAGE COMPONENT (/presell)
 function PresellPage() {
-  const navigate = useNavigate();
-  const [whatsappNumber, setWhatsappNumber] = useState('5547997114520');
+  const [whatsappNumber] = useState('5547997114520');
   const [selectedSymptom, setSelectedSymptom] = useState<string>('Dor nas Articulações, Coluna e Músculos');
 
   const quizOptions = [
@@ -91,6 +117,25 @@ function PresellPage() {
       `Olá! Vi o vídeo no TikTok sobre o Guia de Medicina Alternativa de A a Z por R$ 12,95.\nMeu foco principal é: ${selectedSymptom}${pageText}.\nGostaria de receber a recomendação e a oferta no WhatsApp!`
     );
     return `https://wa.me/${whatsappNumber}?text=${message}`;
+  };
+
+  const handleWhatsappClick = (buttonPosition: string) => {
+    // TikTok Pixel Event Triggers for WhatsApp Conversion
+    trackTikTokEvent('ClickButton', { 
+      button_name: `WhatsApp_${buttonPosition}`,
+      symptom: selectedSymptom,
+      value: 12.95,
+      currency: 'BRL'
+    });
+    trackTikTokEvent('Contact', {
+      content_name: 'Atendimento WhatsApp X1',
+      symptom: selectedSymptom
+    });
+    trackTikTokEvent('InitiatePurchase', {
+      content_name: 'Guia Medicina Alternativa A-Z',
+      value: 12.95,
+      currency: 'BRL'
+    });
   };
 
   return (
@@ -126,6 +171,7 @@ function PresellPage() {
             target="_blank" 
             rel="noopener noreferrer" 
             className="presell-wa-button"
+            onClick={() => handleWhatsappClick('Topo')}
           >
             <MessageCircle size={28} />
             <span>Falar no WhatsApp & Liberar Guia por R$ 12,95</span>
@@ -152,7 +198,10 @@ function PresellPage() {
               <button
                 key={opt.label}
                 className={`quiz-option-btn ${selectedSymptom === opt.label ? 'selected' : ''}`}
-                onClick={() => setSelectedSymptom(opt.label)}
+                onClick={() => {
+                  setSelectedSymptom(opt.label);
+                  trackTikTokEvent('ClickButton', { button_name: `QuizOption_${opt.label}` });
+                }}
               >
                 <span>🌿 {opt.label} <small style={{ color: '#2d6a4f', fontSize: '0.82rem' }}>(Pág. {opt.page})</small></span>
                 <span style={{ fontSize: '1.2rem' }}>{selectedSymptom === opt.label ? '✓' : '→'}</span>
@@ -161,12 +210,13 @@ function PresellPage() {
           </div>
         </div>
 
-        {/* WhatsApp CTA Button */}
+        {/* BOTTOM WHATSAPP CTA BUTTON */}
         <a 
           href={generateWhatsappLink()} 
           target="_blank" 
           rel="noopener noreferrer" 
           className="presell-wa-button"
+          onClick={() => handleWhatsappClick('Quiz_Bottom')}
         >
           <MessageCircle size={28} />
           <span>Falar no WhatsApp & Liberar Guia por R$ 12,95</span>
@@ -203,7 +253,23 @@ function HomePage() {
     setOpenFaq(openFaq === index ? null : index);
   };
 
-  const handleCheckout = () => {
+  const handleCheckout = (locationSource: string = 'Checkout_Main') => {
+    // TikTok Pixel Conversion Events for Checkout
+    trackTikTokEvent('AddToCart', { 
+      content_name: 'Guia Medicina Alternativa de A a Z', 
+      content_category: 'Ebook',
+      value: 12.95, 
+      currency: 'BRL',
+      location: locationSource
+    });
+    trackTikTokEvent('InitiatePurchase', { 
+      content_name: 'Guia Medicina Alternativa de A a Z', 
+      content_category: 'Ebook',
+      value: 12.95, 
+      currency: 'BRL',
+      location: locationSource
+    });
+
     window.location.href = '#checkout';
     alert('Redirecionando para a página de checkout 100% segura...');
   };
@@ -342,7 +408,7 @@ function HomePage() {
               </div>
             </div>
 
-            <button onClick={handleCheckout} className="cta-button">
+            <button onClick={() => handleCheckout('Hero_CTA')} className="cta-button">
               <Sparkles size={24} />
               Quero Ter Acesso ao Guia Natural Agora
               <ArrowRight size={24} />
@@ -428,7 +494,7 @@ function HomePage() {
             <p style={{ color: '#2d6a4f', fontWeight: 700, fontSize: '1.05rem', marginBottom: '16px' }}>
               E mais de 120 outras receitas organizadas no livro completo!
             </p>
-            <button onClick={handleCheckout} className="cta-button" style={{ maxWidth: '420px', padding: '16px 28px', fontSize: '1.1rem' }}>
+            <button onClick={() => handleCheckout('AZ_Section_CTA')} className="cta-button" style={{ maxWidth: '420px', padding: '16px 28px', fontSize: '1.1rem' }}>
               Garantir Meu Livro Completo por R$ 12,95
             </button>
           </div>
@@ -590,7 +656,7 @@ function HomePage() {
           </div>
 
           <div style={{ textAlign: 'center', marginTop: '40px' }}>
-            <button onClick={handleCheckout} className="cta-button">
+            <button onClick={() => handleCheckout('FAQ_Section_CTA')} className="cta-button">
               <Sparkles size={24} />
               Quero Acessar o Guia Medicina Alternativa de A a Z Agora
             </button>
@@ -609,7 +675,7 @@ function HomePage() {
           </div>
         </div>
 
-        <button onClick={handleCheckout} className="sticky-btn">
+        <button onClick={() => handleCheckout('Sticky_Bottom_CTA')} className="sticky-btn">
           Quero o Guia Agora ➔
         </button>
       </div>
@@ -645,6 +711,7 @@ export default function App() {
 
   return (
     <HashRouter>
+      <TikTokRouteTracker />
       <div className={largeFont ? 'large-font-mode' : ''}>
         <NavigationHeader largeFont={largeFont} setLargeFont={setLargeFont} />
 
