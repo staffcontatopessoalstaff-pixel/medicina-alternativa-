@@ -21,19 +21,27 @@ import {
 interface Remedy {
   letter: string;
   symptom: string;
+  page: number;
   ingredient: string;
   preview: string;
 }
 
 const remediesData: Remedy[] = [
-  { letter: 'A', symptom: 'Azia e Refluxo Gastroesofágico', ingredient: 'Chá de Espinheira-Santa & Suco de Batata Doce', preview: 'Alívio imediato da queimação estomacal sem precisar de antiácidos químicos.' },
-  { letter: 'A', symptom: 'Ansiedade e Estresse', ingredient: 'Infusão Concentrada de Mulungu & Maracujá', preview: 'Acalma o sistema nervoso central de forma suave, reduzindo os batimentos acelerados.' },
-  { letter: 'C', symptom: 'Colesterol Alto & Circulação', ingredient: 'Alho Roxo Macerado com Limão e Azeite', preview: 'Ajuda a desobstruir artérias e regular as taxas sanguíneas naturalmente.' },
-  { letter: 'D', symptom: 'Dores Musculares e nas Articulações', ingredient: 'Compressa Tópica de Canela-de-Velho & Arnica', preview: 'Reduz a inflamação nas juntas, joelhos e coluna em poucos dias de uso contínuo.' },
-  { letter: 'D', symptom: 'Dor de Cabeça e Enxaqueca', ingredient: 'Óleo Essencial de Hortelã-Pimenta na Têmpora', preview: 'Descongestiona os vasos sanguíneos aliviando a pressão cefálica rapidamente.' },
-  { letter: 'I', symptom: 'Insônia e Sono Agitado', ingredient: 'Chá de Camomila com Valeriana e Mel Pure', preview: 'Induz ao sono profundo e restaurador sem causar dependência ou sonolência ao acordar.' },
-  { letter: 'P', symptom: 'Pressão Alta / Hipertensão', ingredient: 'Água de Chuchu com Folha de Oliveira', preview: 'Potente vaso-dilatador natural para manter a pressão sob controle.' },
-  { letter: 'R', symptom: 'Rinite e Congestão Nasal', ingredient: 'Vaporização de Eucalipto e Sal Marinho', preview: 'Desentupa as vias aéreas de forma higiênica e sem corticoides.' }
+  { letter: 'A', symptom: 'Azia, Refluxo & Queimação no Estômago', page: 116, ingredient: 'Chá de Espinheira-Santa & Suco de Batata Doce', preview: 'Alívio imediato da queimação estomacal sem precisar de antiácidos químicos.' },
+  { letter: 'A', symptom: 'Ansiedade, Estresse & Esgotamento Nervoso', page: 212, ingredient: 'Infusão Concentrada de Mulungu & Maracujá', preview: 'Acalma o sistema nervoso central de forma suave, reduzindo a tensão e palpitação.' },
+  { letter: 'A', symptom: 'Articulações, Juntas & Dores Musculares', page: 340, ingredient: 'Compressa Tópica de Canela-de-Velho & Arnica', preview: 'Desinflama as articulações, joelhos e coluna em poucos dias de uso contínuo.' },
+  { letter: 'C', symptom: 'Colesterol Alto, Triglicérides & Artérias', page: 351, ingredient: 'Alho Roxo Macerado com Limão e Azeite', preview: 'Ajuda a desobstruir artérias e regular as taxas sanguíneas naturalmente.' },
+  { letter: 'C', symptom: 'Cólicas Intestinais & Prisão de Ventre', page: 327, ingredient: 'Chá de Ameixa Preta com Semente de Linhaça', preview: 'Estimula o trânsito intestinal sem causar dores abdominais ou diarreia.' },
+  { letter: 'D', symptom: 'Dores nas Costas, Coluna e Peito', page: 325, ingredient: 'Cataplasma de Argila Verde com Sucupira', preview: 'Alivia dores lombares e rigidez muscular rapidamente.' },
+  { letter: 'D', symptom: 'Dor de Cabeça e Enxaqueca Crônica', page: 196, ingredient: 'Óleo Essencial de Hortelã-Pimenta na Têmpora', preview: 'Descongestiona os vasos sanguíneos aliviando a pressão cefálica.' },
+  { letter: 'F', symptom: 'Fígado Gorduroso & Doenças do Fígado', page: 220, ingredient: 'Chá de Alcachofra com Boldo-do-Chile', preview: 'Regenera as células hepáticas e limpa o acúmulo de gordura no fígado.' },
+  { letter: 'G', symptom: 'Gases Intestinais & Flatulência', page: 228, ingredient: 'Infusão de Erva-Doce, Anis Estrelado e Carqueja', preview: 'Elimina o estufamento abdominal e os gases dolorosos imediatamente.' },
+  { letter: 'G', symptom: 'Gripe, Tosse & Catarro na Garganta', page: 240, ingredient: 'Xarope Caseiro de Agrião, Mel e Própolis', preview: 'Expulsa o catarro retido nos pulmões e fortalece a imunidade.' },
+  { letter: 'H', symptom: 'Hipertensão Arterial (Pressão Alta)', page: 258, ingredient: 'Água de Chuchu com Folha de Oliveira e Alho', preview: 'Potente vaso-dilatador natural para manter a pressão sob controle.' },
+  { letter: 'I', symptom: 'Insônia & Sono Agitado', page: 278, ingredient: 'Chá de Camomila com Valeriana e Passiflora', preview: 'Induz ao sono profundo e restaurador sem causar dependência.' },
+  { letter: 'M', symptom: 'Menopausa & Distúrbios Hormonais', page: 292, ingredient: 'Extrato Natural de Amora Preta & Sálvia', preview: 'Reduz os calorões, suores noturnos e oscilações de humor na menopausa.' },
+  { letter: 'R', symptom: 'Rins, Cálculos Renais & Infecção Urinária', page: 344, ingredient: 'Chá de Quebra-Pedra com Cabelo de Milho', preview: 'Auxilia na dissolução de pedras nos rins e limpa o trato urinário.' },
+  { letter: 'V', symptom: 'Varizes & Má Circulação nas Pernas', page: 380, ingredient: 'Banho de Assento com Castanha-da-Índia', preview: 'Alivia o inchaço, sensação de peso e dores nas pernas cansadas.' }
 ];
 
 // Header Navigation Bar Component
@@ -59,11 +67,28 @@ function NavigationHeader({ largeFont, setLargeFont }: { largeFont: boolean; set
 function PresellPage() {
   const navigate = useNavigate();
   const [whatsappNumber, setWhatsappNumber] = useState('5511999999999');
-  const [selectedSymptom, setSelectedSymptom] = useState<string>('Dores Musculares ou nas Articulações');
+  const [selectedSymptom, setSelectedSymptom] = useState<string>('Dor nas Articulações, Coluna e Músculos');
+
+  const quizOptions = [
+    { label: 'Dor nas Articulações, Coluna e Músculos', page: 340 },
+    { label: 'Azia, Refluxo e Queimação no Estômago', page: 116 },
+    { label: 'Insônia e Sono Agitado', page: 278 },
+    { label: 'Pressão Alta (Hipertensão)', page: 258 },
+    { label: 'Doenças do Fígado e Gordura no Fígado', page: 220 },
+    { label: 'Prisão de Ventre, Gases e Estufamento', page: 327 },
+    { label: 'Varizes e Má Circulação nas Pernas', page: 380 },
+    { label: 'Ansiedade, Estresse e Esgotamento', page: 212 },
+    { label: 'Colesterol e Triglicérides Altos', page: 351 },
+    { label: 'Menopausa e Calorões', page: 292 },
+    { label: 'Gripe, Tosse e Catarro no Peito', page: 240 },
+    { label: 'Cálculo Renal e Dores nos Rins', page: 344 }
+  ];
 
   const generateWhatsappLink = () => {
+    const selectedObj = quizOptions.find(o => o.label === selectedSymptom);
+    const pageText = selectedObj ? ` (Seção no Livro: Pág. ${selectedObj.page})` : '';
     const message = encodeURIComponent(
-      `Olá! Vi o vídeo no TikTok sobre o Guia de Medicina Alternativa de A a Z por R$ 12,95.\nMeu foco principal é: ${selectedSymptom}.\nGostaria de receber a recomendação e a oferta no WhatsApp!`
+      `Olá! Vi o vídeo no TikTok sobre o Guia de Medicina Alternativa de A a Z por R$ 12,95.\nMeu foco principal é: ${selectedSymptom}${pageText}.\nGostaria de receber a recomendação e a oferta no WhatsApp!`
     );
     return `https://wa.me/${whatsappNumber}?text=${message}`;
   };
@@ -87,11 +112,11 @@ function PresellPage() {
 
         {/* Presell Headline */}
         <h1 className="presell-title">
-          Você sofre com <span>Azia, Insônia, Dores no Corpo</span> ou Pressão Alta no Dia a Dia?
+          Você sofre com <span>Dores no Corpo, Azia, Insônia</span> ou Pressão Alta no Dia a Dia?
         </h1>
 
         <p className="presell-description">
-          Descubra como tratar os principais desconfortos da idade com ingredientes simples que você já tem em casa, <strong>com o Guia Completo de A a Z por apenas R$ 12,95</strong>.
+          Consulte o <strong>Índice Oficial de A a Z</strong> e descubra receitas naturais testadas para mais de 120 desconfortos da idade, <strong>por apenas R$ 12,95</strong>.
         </p>
 
         {/* Product Mockup Preview */}
@@ -103,27 +128,21 @@ function PresellPage() {
           />
         </div>
 
-        {/* Interactive 1-click Quiz */}
+        {/* Interactive 1-click Quiz based on REAL BOOK INDEX */}
         <div className="presell-quiz-box">
           <div className="quiz-question-title">
             <HelpCircle size={20} />
-            Qual o seu principal desconforto no momento? (Selecione 1 opção):
+            Qual o seu principal desconforto no momento? (Selecione 1 opção do Índice):
           </div>
           <div className="quiz-options">
-            {[
-              'Dores Musculares ou nas Articulações',
-              'Azia, Refluxo e Queimação no Estômago',
-              'Insônia e Dificuldade para Dormir',
-              'Pressão Alta e Colesterol',
-              'Ansiedade e Falta de Energia'
-            ].map((symptom) => (
+            {quizOptions.map((opt) => (
               <button
-                key={symptom}
-                className={`quiz-option-btn ${selectedSymptom === symptom ? 'selected' : ''}`}
-                onClick={() => setSelectedSymptom(symptom)}
+                key={opt.label}
+                className={`quiz-option-btn ${selectedSymptom === opt.label ? 'selected' : ''}`}
+                onClick={() => setSelectedSymptom(opt.label)}
               >
-                <span>🌿 {symptom}</span>
-                <span style={{ fontSize: '1.2rem' }}>{selectedSymptom === symptom ? '✓' : '→'}</span>
+                <span>🌿 {opt.label} <small style={{ color: '#2d6a4f', fontSize: '0.82rem' }}>(Pág. {opt.page})</small></span>
+                <span style={{ fontSize: '1.2rem' }}>{selectedSymptom === opt.label ? '✓' : '→'}</span>
               </button>
             ))}
           </div>
@@ -197,7 +216,7 @@ function HomePage() {
     return matchesSearch && matchesLetter;
   });
 
-  const alphabet = ['TODOS', 'A', 'C', 'D', 'I', 'P', 'R'];
+  const alphabet = ['TODOS', 'A', 'C', 'D', 'F', 'G', 'H', 'I', 'M', 'R', 'V'];
 
   const toggleFaq = (index: number) => {
     setOpenFaq(openFaq === index ? null : index);
@@ -388,7 +407,7 @@ function HomePage() {
               <input 
                 type="text" 
                 className="search-input"
-                placeholder="Ex: Azia, Insônia, Dor de Cabeça, Colesterol..." 
+                placeholder="Ex: Azia, Fígado, Insônia, Dor nas Costas, Colesterol..." 
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -413,9 +432,12 @@ function HomePage() {
           <div className="remedy-cards-grid">
             {filteredRemedies.map((remedy, idx) => (
               <div key={idx} className="remedy-card">
-                <span className="remedy-badge">LETRA {remedy.letter}</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                  <span className="remedy-badge">LETRA {remedy.letter}</span>
+                  <span style={{ fontSize: '0.8rem', color: '#2d6a4f', fontWeight: 700, background: '#eef7f2', padding: '2px 8px', borderRadius: '8px' }}>Pág. {remedy.page}</span>
+                </div>
                 <h3 className="remedy-title">{remedy.symptom}</h3>
-                <div className="remedy-ingredient">🌿 Base: {remedy.ingredient}</div>
+                <div className="remedy-ingredient">🌿 Receita: {remedy.ingredient}</div>
                 <p className="remedy-desc">{remedy.preview}</p>
               </div>
             ))}
@@ -658,7 +680,7 @@ export default function App() {
             <p style={{ fontWeight: 700, fontSize: '1.1rem', color: '#ffffff', marginBottom: '8px' }}>
               🌿 Medicina Alternativa de A a Z
             </p>
-            <p>Seu guia natural de saúde, bem-estar e autonomia para do dia a dia.</p>
+            <p>Seu guia natural de saúde, bem-estar e autonomia para o dia a dia.</p>
             <p style={{ fontSize: '0.8rem', opacity: 0.7, marginTop: '16px' }}>
               Aviso Legal: As informações contidas neste guia têm caráter educativo e informativo sobre terapias naturais e remédios caseiros tradicionais. Elas não substituem o diagnóstico ou acompanhamento médico profissional.
             </p>
