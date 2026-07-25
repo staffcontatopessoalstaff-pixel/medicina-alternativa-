@@ -18,21 +18,61 @@ import {
   HelpCircle
 } from 'lucide-react';
 
-// TikTok Pixel Type Declaration
+// TikTok Pixel & Events API Configuration
+const TIKTOK_PIXEL_ID = 'D9HS3P3C77UDT3P967TG';
+const TIKTOK_ACCESS_TOKEN = '6fb1754dc33918094136a4e913b65b7aeba7171f';
+
 declare global {
   interface Window {
     ttq?: any;
   }
 }
 
-// TikTok Event Trigger Helper
+// TikTok Server-Side Events API Helper
+const sendTikTokEventsApi = (eventName: string, params?: Record<string, any>) => {
+  try {
+    const eventId = `evt_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+    const payload = {
+      pixel_code: TIKTOK_PIXEL_ID,
+      event: eventName,
+      event_id: eventId,
+      timestamp: new Date().toISOString(),
+      context: {
+        page: {
+          url: window.location.href,
+          referrer: document.referrer
+        },
+        user: {
+          user_agent: navigator.userAgent
+        }
+      },
+      properties: params || {}
+    };
+
+    fetch('https://business-api.tiktok.com/open_api/v1.3/event/track/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Token': TIKTOK_ACCESS_TOKEN
+      },
+      body: JSON.stringify(payload)
+    }).catch(() => {
+      // Ignore network CORS or adblocker restrictions silently
+    });
+  } catch (e) {
+    // Prevent breaking user experience
+  }
+};
+
+// Dual TikTok Event Trigger Helper (Pixel Client-Side + Events API)
 const trackTikTokEvent = (eventName: string, params?: Record<string, any>) => {
   if (window.ttq && typeof window.ttq.track === 'function') {
     window.ttq.track(eventName, params);
   }
+  sendTikTokEventsApi(eventName, params);
 };
 
-// Route Change Tracker for TikTok Pixel PageView
+// Route Change Tracker for TikTok Pixel & Events API PageView
 function TikTokRouteTracker() {
   const location = useLocation();
 
@@ -40,6 +80,7 @@ function TikTokRouteTracker() {
     if (window.ttq && typeof window.ttq.page === 'function') {
       window.ttq.page();
     }
+    sendTikTokEventsApi('PageView');
   }, [location]);
 
   return null;
