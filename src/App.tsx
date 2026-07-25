@@ -66,7 +66,7 @@ function NavigationHeader({ largeFont, setLargeFont }: { largeFont: boolean; set
 // 1. PRESELL PAGE COMPONENT (/presell)
 function PresellPage() {
   const navigate = useNavigate();
-  const [whatsappNumber, setWhatsappNumber] = useState('5511999999999');
+  const [whatsappNumber, setWhatsappNumber] = useState('5547997114520');
   const [selectedSymptom, setSelectedSymptom] = useState<string>('Dor nas Articulações, Coluna e Músculos');
 
   const quizOptions = [
