@@ -178,38 +178,6 @@ function PresellPage() {
           <span>🛡️ Garantia de 7 Dias</span>
         </div>
 
-        {/* WhatsApp Number Configuration Tool for User */}
-        <div className="presell-config-bar">
-          <strong>⚙️ Configuração do WhatsApp (X1):</strong>
-          <input 
-            type="text" 
-            value={whatsappNumber} 
-            onChange={(e) => setWhatsappNumber(e.target.value)}
-            placeholder="Ex: 5511999999999"
-          />
-          <span style={{ fontSize: '0.78rem', color: '#555', display: 'block', marginTop: '4px' }}>
-            *Altere aqui seu DDD + WhatsApp (ex: 5511999999999).
-          </span>
-        </div>
-
-        {/* Direct Link to Sales Landing Page /home */}
-        <div style={{ marginTop: '24px', paddingTop: '16px', borderTop: '1px solid #eef7f2' }}>
-          <button 
-            onClick={() => navigate('/home')}
-            style={{
-              background: 'none',
-              border: 'none',
-              color: '#2d6a4f',
-              fontWeight: 700,
-              cursor: 'pointer',
-              textDecoration: 'underline',
-              fontSize: '0.95rem'
-            }}
-          >
-            Ir para a Landing Page Principal (/home) ➔
-          </button>
-        </div>
-
       </div>
     </div>
   );
