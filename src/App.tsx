@@ -119,6 +119,19 @@ function PresellPage() {
           Consulte o <strong>Índice Oficial de A a Z</strong> e descubra receitas naturais testadas para mais de 120 desconfortos da idade, <strong>por apenas R$ 12,95</strong>.
         </p>
 
+        {/* TOP WHATSAPP CTA BUTTON */}
+        <div style={{ marginBottom: '28px' }}>
+          <a 
+            href={generateWhatsappLink()} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="presell-wa-button"
+          >
+            <MessageCircle size={28} />
+            <span>Falar no WhatsApp & Liberar Guia por R$ 12,95</span>
+          </a>
+        </div>
+
         {/* Product Mockup Preview */}
         <div style={{ textAlign: 'center', marginBottom: '24px' }}>
           <img 
